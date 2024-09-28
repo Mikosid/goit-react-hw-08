@@ -1,0 +1,25 @@
+.container {
+  border: 1px solid black;
+  border-radius: 4px;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background-color: rgb(226, 219, 214);
+  color: #213547;
+}
+
+.text {
+  margin: 0;
+}
+
+.iconPhone {
+  font-size: 18px;
+  padding-right: 7px;
+}
+
+.iconPerson {
+  font-size: 20px;
+  padding-right: 7px;
+}
