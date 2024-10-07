@@ -22,19 +22,27 @@ export default function RegistrationForm() {
       onSubmit={handleSubmit}
     >
       <Form className={css.form} autoComplete="off">
-        <label className={css.label}>
-          Username
-          <Field type="text" name="name" />
-        </label>
-        <label className={css.label}>
-          Email
-          <Field type="email" name="email" />
-        </label>
-        <label className={css.label}>
-          Password
-          <Field type="password" name="password" />
-        </label>
-        <button type="submit">Register</button>
+        <div className={css.formGroup}>
+          <label className={css.text}>
+            Username
+            <Field className={css.input} type="text" name="name" />
+          </label>
+        </div>
+        <div className={css.formGroup}>
+          <label className={css.text}>
+            Email
+            <Field className={css.input} type="email" name="email" />
+          </label>
+        </div>
+        <div className={css.formGroup}>
+          <label className={css.text}>
+            Password
+            <Field className={css.input} type="password" name="password" />
+          </label>
+        </div>
+        <button type="submit" className={css.button}>
+          Register
+        </button>
       </Form>
     </Formik>
   );

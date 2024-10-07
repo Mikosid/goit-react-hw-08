@@ -1,13 +1,16 @@
 import { Formik, Form, Field } from "formik";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { logIn } from "../../redux/auth/operations";
+import { selectIsLoading } from "../../redux/auth/selectors";
 
 import css from "./LoginForm.module.css";
 
 export default function LoginForm() {
   const dispatch = useDispatch();
+
+  const isLoading = useSelector(selectIsLoading);
+
   const handleSubmit = (values, actions) => {
-    console.log(values);
     dispatch(logIn(values));
     actions.resetForm();
   };
@@ -21,15 +24,21 @@ export default function LoginForm() {
       onSubmit={handleSubmit}
     >
       <Form className={css.form} autoComplete="off">
-        <label className={css.label}>
-          Email
-          <Field type="email" name="email" />
-        </label>
-        <label className={css.label}>
-          Password
-          <Field type="password" name="password" />
-        </label>
-        <button type="submit">Log In</button>
+        <div className={css.formGroup}>
+          <label className={css.text}>
+            Email
+            <Field className={css.input} type="email" name="email" />
+          </label>
+        </div>
+        <div className={css.formGroup}>
+          <label className={css.text}>
+            Password
+            <Field className={css.input} type="password" name="password" />
+          </label>
+        </div>
+        <button type="submit" disabled={isLoading} className={css.button}>
+          Log In
+        </button>
       </Form>
     </Formik>
   );

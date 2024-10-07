@@ -1,6 +1,3 @@
-//isAnyOf@gmail.com
-//isAnyOf666@gmail.com
-
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -13,12 +10,6 @@ const clearAuthHeader = () => {
   axios.defaults.headers.common.Authorization = ``;
 };
 
-/*
- * POST @ /users/signup
- * body: { name, email, password }
- *
- * After successful registration, add the token to the HTTP header
- */
 export const register = createAsyncThunk(
   "auth/register",
   async (credentials, thunkApi) => {
@@ -32,12 +23,6 @@ export const register = createAsyncThunk(
   }
 );
 
-/*
- * POST @ /users/login
- * body: { email, password }
- *
- * After successful login, add the token to the HTTP header
- */
 export const logIn = createAsyncThunk(
   "auth/login",
   async (credentials, thunkApi) => {
@@ -51,12 +36,6 @@ export const logIn = createAsyncThunk(
   }
 );
 
-/*
- * POST @ /users/logout
- * headers: Authorization: Bearer token
- *
- * After a successful logout, remove the token from the HTTP header
- */
 export const logOut = createAsyncThunk("auth/logout", async (_, thunkApi) => {
   try {
     await axios.post("users/logout");
@@ -65,3 +44,19 @@ export const logOut = createAsyncThunk("auth/logout", async (_, thunkApi) => {
     return thunkApi.rejectWithValue(error.message);
   }
 });
+
+export const refreshUser = createAsyncThunk(
+  "auth/refresh",
+  async (_, thunkApi) => {
+    const reduxState = thunkApi.getState();
+    setAuthHeader(reduxState.auth.token);
+    const response = await axios.get("/users/current");
+    return response.data;
+  },
+  {
+    condition: (_, thunkApi) => {
+      const reduxState = thunkApi.getState();
+      return reduxState.auth.token !== null;
+    },
+  }
+);
